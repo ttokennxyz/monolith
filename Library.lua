@@ -528,7 +528,7 @@
                 });
                 
                 items[ "ui_title" ] = library:create( "TextLabel" , {
-                    FontFace = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.SemiBold, Enum.FontStyle.Normal);
+                    FontFace = library.font;
                     TextColor3 = rgb(255, 255, 255);
                     TextStrokeColor3 = rgb(255, 255, 255);
                     Text = cfg.name;
