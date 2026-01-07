@@ -538,7 +538,7 @@
                     Size = dim2(1, 0, 1, 0);
                     BorderSizePixel = 0;
                     BorderColor3 = rgb(0, 0, 0);
-                    TextSize = 35;
+                    TextSize = 15;
                     BackgroundColor3 = rgb(255, 255, 255)
                 });
                 
