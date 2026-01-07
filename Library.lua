@@ -138,31 +138,39 @@
     local notifications = library.notifications 
 
     -- Font importing system 
-        if isfile(library.directory .. "/fonts/main.ttf") then 
-            delfile(library.directory .. "/fonts/main.ttf")
-        else 
-            writefile(library.directory .. "/fonts/main.ttf", game:HttpGet("https://github.com/f1nobe7650/Nebula/raw/refs/heads/main/Minecraftia-Regular.ttf"))
-        end 
-        
-        local minecraftia = {
-            name = "Minecraftia",
-            faces = {
-                {
-                    name = "Regular",
-                    weight = 400,
-                    style = "normal",
-                    assetId = getcustomasset(library.directory .. "/fonts/main.ttf")
-                }
-            }
-        }
-        
-        if not isfile(library.directory .. "/fonts/main_encoded.ttf") then 
-            writefile(library.directory .. "/fonts/main_encoded.ttf", http_service:JSONEncode(minecraftia))
-        end 
-        
-        library.font = Font.new(getcustomasset(library.directory .. "/fonts/main_encoded.ttf"), Enum.FontWeight.Regular)
-        -- library.font = library.font
-    -- 
+	local success, err = pcall(function()
+	    if isfile(library.directory .. "/fonts/main.ttf") then 
+	        delfile(library.directory .. "/fonts/main.ttf")
+	    end
+	    
+	    local fontData = game:HttpGet("https://github.com/f1nobe7650/Nebula/raw/refs/heads/main/Minecraftia-Regular.ttf")
+	    writefile(library.directory .. "/fonts/main.ttf", fontData)
+	end)
+	
+	if not success then
+	    warn("Failed to load custom font:", err)
+	    -- Fallback to default font
+	    library.font = Font.new("rbxasset://fonts/families/SourceSansPro.json", Enum.FontWeight.Regular)
+	else
+	    -- Continue with custom font setup
+	    local minecraftia = {
+	        name = "Minecraftia",
+	        faces = {
+	            {
+	                name = "Regular",
+	                weight = 400,
+	                style = "normal",
+	                assetId = getcustomasset(library.directory .. "/fonts/main.ttf")
+	            }
+	        }
+	    }
+	    
+	    if not isfile(library.directory .. "/fonts/main_encoded.ttf") then 
+	        writefile(library.directory .. "/fonts/main_encoded.ttf", http_service:JSONEncode(minecraftia))
+	    end 
+	    
+	    library.font = Font.new(getcustomasset(library.directory .. "/fonts/main_encoded.ttf"), Enum.FontWeight.Regular)
+	end
 --
 
 -- Library functions 
